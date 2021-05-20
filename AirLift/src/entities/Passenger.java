@@ -6,9 +6,7 @@
 package entities;
 
 import genclass.GenericIO;
-import sharedRegions.DepartureAirport;
-import sharedRegions.Plane;
-import sharedRegions.ArrivalAirport;
+import stubs.*;
 import commInfra.*;
 
 /**
@@ -36,19 +34,19 @@ public class Passenger extends Thread{
    *  Reference to the departure airport.
    */
 
-   private final DepartureAirport dAirport;
+   private final DepartureAirportStub dAirport;
    
    /**
    *  Reference to the plane.
    */
 
-   private final Plane plane;
+   private final PlaneStub plane;
    
    /**
    *  Reference to the arrival airport.
    */
 
-   private final ArrivalAirport aAirport;
+   private final ArrivalAirportStub aAirport;
 
    /**
    *   Instantiation of a passenger thread.
@@ -60,7 +58,7 @@ public class Passenger extends Thread{
    *     @param aAirport reference to the arrival airport
    */
 
-   public Passenger (String name, int passengerId, DepartureAirport dAirport, Plane plane, ArrivalAirport aAirport)
+   public Passenger (String name, int passengerId, DepartureAirportStub dAirport, PlaneStub plane, ArrivalAirportStub aAirport)
    {
       super (name);
       this.passengerId = passengerId;

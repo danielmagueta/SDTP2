@@ -93,15 +93,7 @@ public class Plane {
     }
     
 
-   
-     /**
-   *    Passengers in flight
-   * 
-   *       @return FIFo of ids of passengers in the flight
-   */
-    public MemFIFO<Integer> getPassengerINF() {
-        return passengerINF;
-    }
+
     
    /**
     *  Flying to destination airport.
@@ -113,7 +105,7 @@ public class Plane {
    {
       access.down();
       ((Pilot) Thread.currentThread()).setPilotState(3);
-      repos.setPilotState ((Pilot) Thread.currentThread(),3);
+      repos.setPilotState (3);
       access.up();
       try
       { sleep ((long) (1 + 100 * Math.random ()));
@@ -134,7 +126,7 @@ public class Plane {
       ((Pilot) Thread.currentThread()).setPilotState(5);
       while(nINF != 0){}
       repos.reportreturning ();
-      repos.setPilotState ((Pilot) Thread.currentThread(),5);
+      repos.setPilotState (5);
       access.up();
       try
       { sleep ((long) (1 + 100 * Math.random ()));
@@ -196,7 +188,7 @@ public class Plane {
             }
 
             ((Pilot) Thread.currentThread()).setPilotState(4);
-            repos.setPilotState((Pilot) Thread.currentThread(),4);
+            repos.setPilotState(4);
             access.up();
             in_flight[passengerID].up();
         }

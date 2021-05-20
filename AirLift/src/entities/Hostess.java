@@ -7,10 +7,7 @@ package entities;
 
 import commInfra.*;
 import genclass.GenericIO;
-import sharedRegions.DepartureAirport;
-import sharedRegions.Plane;
-import sharedRegions.ArrivalAirport;
-import sharedRegions.GeneralRepos;
+import stubs.*;
 
 
 /**
@@ -33,7 +30,7 @@ public class Hostess extends Thread{
    *  Reference to the departure airport.
    */
 
-   private final DepartureAirport dAirport;
+   private final DepartureAirportStub dAirport;
   
 
    
@@ -41,13 +38,9 @@ public class Hostess extends Thread{
    *  Reference to the arrival airport.
    */
 
-   private final ArrivalAirport aAirport;
+   private final ArrivalAirportStub aAirport;
   
-  /**
-   *  Reference to the repository.
-   */
 
-   private final GeneralRepos repos;
    
 
    /**
@@ -56,16 +49,14 @@ public class Hostess extends Thread{
    *     @param name thread name
    *     @param dAirport reference to the departure airport
    *     @param aAirport reference to the arrival airport
-   *     @param repos reference to the general repository
    */
 
-   public Hostess (String name, DepartureAirport dAirport, ArrivalAirport aAirport, GeneralRepos repos)
+   public Hostess (String name, DepartureAirportStub dAirport, ArrivalAirportStub aAirport)
    {
       super (name);
       hostessState = HostessStates.WAIT_FOR_NEXT_FLIGHT;
       this.dAirport = dAirport;
       this.aAirport = aAirport;
-      this.repos = repos;
    }
    
 
