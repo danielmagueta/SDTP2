@@ -5,12 +5,13 @@
  */
 package entities;
 
+import commInfra.*;
 import genclass.GenericIO;
 import sharedRegions.DepartureAirport;
 import sharedRegions.Plane;
 import sharedRegions.ArrivalAirport;
 import sharedRegions.GeneralRepos;
-import commInfra.SimulPar;
+
 
 /**
  *   Hostess thread.

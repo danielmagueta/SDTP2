@@ -1,5 +1,6 @@
 package main;
 
+import commInfra.SimulPar;
 import entities.*;
 import sharedRegions.*;
 import genclass.GenericIO;

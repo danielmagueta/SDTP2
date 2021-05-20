@@ -9,6 +9,7 @@ import genclass.GenericIO;
 import sharedRegions.DepartureAirport;
 import sharedRegions.Plane;
 import sharedRegions.ArrivalAirport;
+import commInfra.*;
 
 /**
  *   Passenger thread.
