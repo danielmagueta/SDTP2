@@ -1,4 +1,4 @@
-package main;
+package commInfra;
 
 /**
  *    Definition of the simulation parameters.

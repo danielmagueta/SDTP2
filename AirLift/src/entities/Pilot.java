@@ -9,7 +9,7 @@ import genclass.GenericIO;
 import sharedRegions.DepartureAirport;
 import sharedRegions.Plane;
 import sharedRegions.ArrivalAirport;
-import main.SimulPar;
+import commInfra.SimulPar;
 
 /**
  *   Pilot thread.
