@@ -10,7 +10,7 @@ import sharedRegions.DepartureAirport;
 import sharedRegions.Plane;
 import sharedRegions.ArrivalAirport;
 import sharedRegions.GeneralRepos;
-import main.SimulPar;
+import commInfra.SimulPar;
 
 /**
  *   Hostess thread.
