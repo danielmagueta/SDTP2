@@ -6,9 +6,7 @@
 package entities;
 
 import genclass.GenericIO;
-import sharedRegions.DepartureAirport;
-import sharedRegions.Plane;
-import sharedRegions.ArrivalAirport;
+import stubs.*;
 import commInfra.*;
 
 /**
@@ -31,19 +29,19 @@ public class Pilot extends Thread{
    *  Reference to the departure airport.
    */
 
-   private final DepartureAirport dAirport;
+   private final DepartureAirportStub dAirport;
    
    /**
    *  Reference to the plane.
    */
 
-   private final Plane plane;
+   private final PlaneStub plane;
    
    /**
    *  Reference to the arrival airport.
    */
 
-   private final ArrivalAirport aAirport;
+   private final ArrivalAirportStub aAirport;
 
    /**
    *   Instantiation of a pilot thread.
@@ -54,7 +52,7 @@ public class Pilot extends Thread{
    *     @param aAirport reference to the arrival airport
    */
 
-   public Pilot (String name, DepartureAirport dAirport, Plane plane, ArrivalAirport aAirport)
+   public Pilot (String name, DepartureAirportStub dAirport, PlaneStub plane, ArrivalAirportStub aAirport)
    {
       super (name);
       pilotState = PilotStates.AT_TRANSFER_GATES;

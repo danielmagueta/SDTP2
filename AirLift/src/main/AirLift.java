@@ -57,8 +57,7 @@ public class AirLift
       dAirport = new DepartureAirport(repos);
       plane = new Plane(repos);
       aAirport = new ArrivalAirport(repos);
-      pilot = new Pilot ("Pilot", dAirport, plane, aAirport);
-      pilot.setPriority(6);
+   
       hostess = new Hostess ("Hostess", dAirport, aAirport, repos);  
       for (int i = 0; i < SimulPar.N; i++)
         passenger[i] = new Passenger ("Passenger_" + (i+1), i, dAirport, plane, aAirport);
@@ -69,7 +68,7 @@ public class AirLift
 
       for (int i = 0; i < SimulPar.N; i++)
         passenger[i].start ();
-      pilot.start();
+
       hostess.start();
 
      /* waiting for the end of the simulation */
@@ -83,12 +82,7 @@ public class AirLift
         GenericIO.writelnString ("The passenger " + (i+1) + " has terminated.");
       }
       GenericIO.writelnString ();
-      try
-        { pilot.join ();
-        }
-        catch (InterruptedException e) {}
-        GenericIO.writelnString ("The pilot has terminated.");
-      GenericIO.writelnString ();
+     
       try
         { hostess.join ();
         }

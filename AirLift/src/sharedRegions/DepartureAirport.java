@@ -170,7 +170,7 @@ public class DepartureAirport {
         access.down();
         repos.reportBoarding();
         ((Pilot) Thread.currentThread()).setPilotState(1);
-        repos.setPilotState ((Pilot) Thread.currentThread(),1);
+        repos.setPilotState (1);
         access.up();
         waiting_next_flight.up();
 
@@ -188,7 +188,7 @@ public class DepartureAirport {
     {
         access.down();
         ((Pilot) Thread.currentThread()).setPilotState(2);
-        repos.setPilotState ((Pilot) Thread.currentThread(),2);
+        repos.setPilotState (2);
         access.up();
         waiting_boarding.down();
     }
@@ -203,7 +203,7 @@ public class DepartureAirport {
     public void parkAtTransferGate (){
         access.down();
         ((Pilot) Thread.currentThread()).setPilotState(0);
-        repos.setPilotState ((Pilot) Thread.currentThread(),0);
+        repos.setPilotState (0);
         access.up(); 
     }
     
@@ -219,7 +219,7 @@ public class DepartureAirport {
     {
         access.down();
         ((Hostess) Thread.currentThread()).setHostessState(1);
-        repos.setHostessState ((Hostess) Thread.currentThread(),1);
+        repos.setHostessState (1);
         access.up();
         waiting_passenger.down();
     }
@@ -250,7 +250,7 @@ public class DepartureAirport {
         nINQ --;
         repos.subtractInQ();
         repos.reportCheck (passengerID);
-        repos.setHostessState ((Hostess) Thread.currentThread(),2);
+        repos.setHostessState (2);
         access.up();
         inQueue[passengerID].up();
         checking_passenger.down();
@@ -288,7 +288,7 @@ public class DepartureAirport {
     {
         access.down();
         ((Hostess) Thread.currentThread()).setHostessState(1);
-        repos.setHostessState ((Hostess) Thread.currentThread(),1);
+        repos.setHostessState (1);
         inQueue[passengerID].up();
         nINF++;
         ntotalINF++;
@@ -323,7 +323,7 @@ public class DepartureAirport {
         access.down();
         ((Hostess) Thread.currentThread()).setHostessState(3);
         repos.reportDeparted();
-        repos.setHostessState ((Hostess) Thread.currentThread(),3);
+        repos.setHostessState (3);
         access.up();
         waiting_boarding.up();
     }
@@ -338,7 +338,7 @@ public class DepartureAirport {
     {
         access.down();
         ((Hostess) Thread.currentThread()).setHostessState(0);
-        repos.setHostessState ((Hostess) Thread.currentThread(),0);
+        repos.setHostessState (0);
         access.up();
         waiting_next_flight.down();
     }
