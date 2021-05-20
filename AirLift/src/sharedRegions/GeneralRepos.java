@@ -3,6 +3,7 @@ package sharedRegions;
 import main.*;
 import entities.*;
 import commInfra.*;
+import genclass.FileOp;
 import genclass.GenericIO;
 import genclass.TextFile;
 import java.util.Objects;
@@ -79,11 +80,9 @@ public class GeneralRepos
    *     @param logFileName name of the logging file
    */
 
-   public GeneralRepos (String logFileName)
-   {
-      if ((logFileName == null) || Objects.equals (logFileName, ""))
-         this.logFileName = "logger";
-         else this.logFileName = logFileName;
+   public GeneralRepos ()
+   {    
+      this.logFileName = "log";
       pilotState = PilotStates.AT_TRANSFER_GATES;
       hostessState = HostessStates.WAIT_FOR_NEXT_FLIGHT;
       passengerState = new int[SimulPar.N]; 

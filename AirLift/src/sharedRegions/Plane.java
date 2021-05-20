@@ -5,6 +5,7 @@ import entities.*;
 import commInfra.*;
 import genclass.GenericIO;
 import static java.lang.Thread.sleep;
+import stubs.*;
 
 /**
  *    Plane.
@@ -34,7 +35,7 @@ public class Plane {
    *   Reference to the general repository.
    */
 
-   private final GeneralRepos repos;
+   private final GeneralReposStub repos;
    
    /**
    *  Semaphore to ensure mutual exclusion on the execution of public methods.
@@ -62,7 +63,7 @@ public class Plane {
    *    @param repos reference to the general repository
    */
 
-   public Plane (GeneralRepos repos)
+   public Plane (GeneralReposStub repos)
    {
       nINF = 0;
        passenger = new Passenger [SimulPar.N];
