@@ -1,6 +1,0 @@
-/**
- *   Common infrastructure.
- */
-
-package commInfra;
-
