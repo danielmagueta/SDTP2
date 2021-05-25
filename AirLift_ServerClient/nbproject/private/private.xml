@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/entities/Pilot.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/stubs/ArrivalAirportStub.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/stubs/GeneralReposStub.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/main/PilotMain.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/entities/PassengerStates.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/main/HostessMain.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/entities/Passenger.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/entities/Hostess.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/main/PassengerMain.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/stubs/package-info.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/stubs/PlaneStub.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/commInfra/SimulPar.java</file>
+            <file>file:/home/danimag/Desktop/AirLift_ServerClient/src/clientSide/stubs/DepartureAirportStub.java</file>
+        </group>
+    </open-files>
+</project-private>
