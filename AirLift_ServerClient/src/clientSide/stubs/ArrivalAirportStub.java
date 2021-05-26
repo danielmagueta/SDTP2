@@ -40,14 +40,91 @@ public class ArrivalAirportStub
       this.serverPortNumb = serverPortNumb;
    }
 
-  /**
-   *  Operation go cut the hair.
-   *
-   *  It is called by a customer when he goes to the barber shop to try and cut his hair.
-   *
-   *    @return true, if he did manage to cut his hair -
-   *            false, otherwise
+   
+      /**
+   *  @return number of passengers that have leaved the plane in this flight.
    */
+   
+    public int getnOut() {
+        return nOut;
+    }
+    
+    /**
+   *  @param nOut Set number of passengers that have leaved the plane in this flight.
+   */
+    
+    public void setnOut(int nOut) {
+        this.nOut = nOut;
+    }
+   
+   
+   
+   /**
+   *    Get number of passengers that have arrived and deboarded already.
+   * 
+   *       @return number of passengers that have arrived and deboarded alerady
+   */
+    public int getnPassengerArrived() {
+        return nPassengerArrived;
+    }
+   
+  
+        /**
+    *  Announcing arrival to the arrival airport.
+    *
+    *  It is called by a pilot when the plane arrives at the arrival airport and is ready to initiate the deboarding.
+    * 
+    */
+    public void leaveThePlane ()
+    {
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.REQCUTH, ((Customer) Thread.currentThread ()).getCustomerId (),
+                                ((Customer) Thread.currentThread ()).getCustomerState ());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.CUTHDONE) && (inMessage.getMsgType() != MessageType.BSHOPF))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if (inMessage.getCustId () != ((Customer) Thread.currentThread ()).getCustomerId ())
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer id!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getCustState () < CustomerStates.DAYBYDAYLIFE) || (inMessage.getCustState () > CustomerStates.CUTTHEHAIR))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Customer) Thread.currentThread ()).setCustomerState (inMessage.getCustState ());
+      return (inMessage.getMsgType() == MessageType.CUTHDONE);
+      
+      
+        access.down();
+        repos.subtractInF();
+        repos.addPTAL();
+        ((Passenger) Thread.currentThread()).setPassengerState(3);
+        repos.setPassengerState(((Passenger) Thread.currentThread()).getPassengerId(),3);
+        nPassengerArrived ++;
+        nOut ++;
+        access.up();
+
+
+    }
+   
+
 
    public boolean goCutHair ()
    {

@@ -125,8 +125,8 @@ public class GeneralRepos
    public synchronized void shutdown ()
    {
        nEntities += 1;
-       if (nEntities >= SimulPar.E)
-          ServerSleepingBarbersGeneralRepos.waitConnection = false;
+       if (nEntities >= 3)
+          GeneralReposMain.waitConnection = false;
    }
   
   
