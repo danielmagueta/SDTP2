@@ -24,7 +24,7 @@ public interface PassengerCloning
    *     @return passenger id
    */
 
-   public int getCustomerId ();
+   public int getPassengerId ();
 
   /**
    *   Set passenger state.

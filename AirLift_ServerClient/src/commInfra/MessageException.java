@@ -1,14 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package commInfra;
 
 /**
+ *    Message exception.
  *
- * @author danimag
+ *    Definition of an exception for an invalid message.
  */
-public class MessageException {
-    
+
+public class MessageException extends Exception
+{
+  /**
+   *   Version Id for serialization.
+   */
+
+  private static final long serialVersionUID = 2021L;
+
+  /**
+   *  Message that has given rise to the exception.
+   */
+
+   private final Message msg;
+
+  /**
+   *   Exception instantiation.
+   *
+   *      @param errorMessage sentence signaling the error condition
+   *      @param msg message that has given rise to the exception
+   */
+
+   public MessageException (String errorMessage, Message msg)
+   {
+     super (errorMessage);
+     this.msg = msg;
+   }
+
+  /**
+   *  Getting the message that has given rise to the exception.
+   *
+   *     @return message
+   */
+
+   public Message getMessageVal ()
+   {
+     return (msg);
+   }
 }

@@ -25,7 +25,6 @@ public class HostessMain
    *        args[3] - port number for listening to service requests
    *        args[4] - name of the platform where is located the general repository server
    *        args[5] - port number for listening to service requests
-   *        args[6] - name of the logging file
    */
 
    public static void main (String [] args)
@@ -36,7 +35,6 @@ public class HostessMain
       int ArrivalAirportServerPortNumb = -1;                             // port number for listening to service requests
       String genReposServerHostName;                                     // name of the platform where is located the general repository server
       int genReposServerPortNumb = -1;                                   // port number for listening to service requests
-      String fileName;                                                   // name of the logging file
       Hostess hostess;                                                   // hostess thread
       DepartureAirportStub dAirportStub;                                 // remote reference to the departure airport
       DepartureAirportStub aAirportStub;                                 // remote reference to the arrival airport
@@ -45,7 +43,7 @@ public class HostessMain
 
      /* getting problem runtime parameters */
 
-      if (args.length != 7)
+      if (args.length != 6)
          { GenericIO.writelnString ("Wrong number of parameters!");
            System.exit (1);
          }
@@ -89,7 +87,6 @@ public class HostessMain
            System.exit (1);
          }
       
-      fileName = args[6];
       
 
      /* problem initialization */
@@ -97,7 +94,6 @@ public class HostessMain
       dAirportStub = new DepartureAirportStub(DepartureAirportServerHostName, DepartureAirportServerPortNumb);
       aAirportStub = new ArrivalAirportStub(ArrivalAirportServerHostName, ArrivalAirportServerPortNumb);
       genReposStub = new GeneralReposStub (genReposServerHostName, genReposServerPortNumb);
-      genReposStub.initSimul (fileName);
       hostess = new Hostess("Hostess", dAirportStub, aAirportStub);
 
      /* start of the simulation */

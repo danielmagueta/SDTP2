@@ -99,7 +99,7 @@ public class HostessMain
       { genReposServerPortNumb = Integer.parseInt (args[7]);
       }
       catch (NumberFormatException e)
-      { GenericIO.writelnString ("args[5] is not a number!");
+      { GenericIO.writelnString ("args[7] is not a number!");
         System.exit (1);
       }
       if ((genReposServerPortNumb < 4000) || (genReposServerPortNumb >= 65536))
@@ -117,7 +117,7 @@ public class HostessMain
       aAirportStub = new ArrivalAirportStub(ArrivalAirportServerHostName, ArrivalAirportServerPortNumb);
       genReposStub = new GeneralReposStub (genReposServerHostName, genReposServerPortNumb);
       genReposStub.initSimul (fileName);
-      hostess = new Hostess("Pilot", dAirportStub, planeStub, aAirportStub);
+      pilot = new Pilot("Pilot", dAirportStub, planeStub, aAirportStub);
 
      /* start of the simulation */
      
