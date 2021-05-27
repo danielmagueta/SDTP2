@@ -172,8 +172,8 @@ public class DepartureAirport {
     {
         access.down();
         repos.reportBoarding();
-        ((Pilot) Thread.currentThread()).setPilotState(1);
-        repos.setPilotState ((Pilot) Thread.currentThread(),1);
+        ((DepartureAirportProxy) Thread.currentThread()).setPilotState(1);
+        repos.setPilotState (1);
         access.up();
         waiting_next_flight.up();
 
@@ -190,8 +190,8 @@ public class DepartureAirport {
     public void waitForAllInBoard ()
     {
         access.down();
-        ((Pilot) Thread.currentThread()).setPilotState(2);
-        repos.setPilotState ((Pilot) Thread.currentThread(),2);
+        ((DepartureAirportProxy) Thread.currentThread()).setPilotState(2);
+        repos.setPilotState (2);
         access.up();
         waiting_boarding.down();
     }
@@ -205,8 +205,8 @@ public class DepartureAirport {
    */
     public void parkAtTransferGate (){
         access.down();
-        ((Pilot) Thread.currentThread()).setPilotState(0);
-        repos.setPilotState ((Pilot) Thread.currentThread(),0);
+        ((DepartureAirportProxy) Thread.currentThread()).setPilotState(0);
+        repos.setPilotState (0);
         access.up(); 
     }
     
@@ -221,8 +221,8 @@ public class DepartureAirport {
     public void prepareForPassBoarding ()
     {
         access.down();
-        ((Hostess) Thread.currentThread()).setHostessState(1);
-        repos.setHostessState ((Hostess) Thread.currentThread(),1);
+        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(1);
+        repos.setHostessState (1);
         access.up();
         waiting_passenger.down();
     }
@@ -249,11 +249,11 @@ public class DepartureAirport {
           access.up ();                                                // exit critical region
           System.exit (1);
         }
-        ((Hostess) Thread.currentThread()).setHostessState(2);
+        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(2);
         nINQ --;
         repos.subtractInQ();
         repos.reportCheck (passengerID);
-        repos.setHostessState ((Hostess) Thread.currentThread(),2);
+        repos.setHostessState (2);
         access.up();
         inQueue[passengerID].up();
         checking_passenger.down();
@@ -290,8 +290,8 @@ public class DepartureAirport {
     public boolean waitForNextPassenger (int passengerID)
     {
         access.down();
-        ((Hostess) Thread.currentThread()).setHostessState(1);
-        repos.setHostessState ((Hostess) Thread.currentThread(),1);
+        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(1);
+        repos.setHostessState (1);
         inQueue[passengerID].up();
         nINF++;
         ntotalINF++;
@@ -324,9 +324,9 @@ public class DepartureAirport {
     public void informPlaneReadyToTakeOff ()
     {
         access.down();
-        ((Hostess) Thread.currentThread()).setHostessState(3);
+        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(3);
         repos.reportDeparted();
-        repos.setHostessState ((Hostess) Thread.currentThread(),3);
+        repos.setHostessState (3);
         access.up();
         waiting_boarding.up();
     }
@@ -340,8 +340,8 @@ public class DepartureAirport {
     public void waitForNextFlight ()
     {
         access.down();
-        ((Hostess) Thread.currentThread()).setHostessState(0);
-        repos.setHostessState ((Hostess) Thread.currentThread(),0);
+        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(0);
+        repos.setHostessState (0);
         access.up();
         waiting_next_flight.down();
     }
@@ -370,7 +370,7 @@ public class DepartureAirport {
           System.exit (1);
         }
         repos.addInQ();
-        ((Passenger) Thread.currentThread()).setPassengerState(1);
+        ((DepartureAirportProxy) Thread.currentThread()).setPassengerState(1);
         repos.setPassengerState(passengerID,1);
         access.up();
         waiting_passenger.up();
@@ -386,7 +386,7 @@ public class DepartureAirport {
     public void showDocuments ()
     {
         access.down();
-        int passengerID = ((Passenger) Thread.currentThread()).getPassengerId();
+        int passengerID = ((DepartureAirportProxy) Thread.currentThread()).getPassengerId();
         access.up();
         checking_passenger.up();
         inQueue[passengerID].down();

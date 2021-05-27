@@ -122,8 +122,8 @@ public class Plane {
     public void flyToDestinationPoint ()
    {
       access.down();
-      ((Pilot) Thread.currentThread()).setPilotState(3);
-      repos.setPilotState ((Pilot) Thread.currentThread(),3);
+      ((PlaneProxy) Thread.currentThread()).setPilotState(3);
+      repos.setPilotState (3);
       access.up();
       try
       { sleep ((long) (1 + 100 * Math.random ()));
@@ -141,10 +141,10 @@ public class Plane {
    {
       
       access.down();
-      ((Pilot) Thread.currentThread()).setPilotState(5);
+      ((PlaneProxy) Thread.currentThread()).setPilotState(5);
       while(nINF != 0){}
       repos.reportreturning ();
-      repos.setPilotState ((Pilot) Thread.currentThread(),5);
+      repos.setPilotState (5);
       access.up();
       try
       { sleep ((long) (1 + 100 * Math.random ()));
@@ -174,7 +174,7 @@ public class Plane {
           access.up ();                
           System.exit (1);
         }
-        ((Passenger) Thread.currentThread()).setPassengerState(2);
+        ((PlaneProxy) Thread.currentThread()).setPassengerState(2);
         repos.setPassengerState(passengerID,2);
         nINF ++;
         access.up();
@@ -205,8 +205,8 @@ public class Plane {
               System.exit (1);
             }
 
-            ((Pilot) Thread.currentThread()).setPilotState(4);
-            repos.setPilotState((Pilot) Thread.currentThread(),4);
+            ((PlaneProxy) Thread.currentThread()).setPilotState(4);
+            repos.setPilotState(4);
             access.up();
             in_flight[passengerID].up();
         }
@@ -224,7 +224,7 @@ public class Plane {
     {
     
         access.down();
-        int passengerID = ((Passenger) Thread.currentThread()).getPassengerId();
+        int passengerID = ((PlaneProxy) Thread.currentThread()).getPassengerId();
         access.up();
         in_flight[passengerID].down();
     }

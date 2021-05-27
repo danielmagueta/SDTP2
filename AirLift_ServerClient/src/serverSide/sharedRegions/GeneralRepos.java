@@ -213,7 +213,7 @@ public class GeneralRepos
    *     @param state pilot state
    */
 
-   public void setPilotState (Pilot pilot, int state)
+   public void setPilotState (int state)
    {
       access.down ();                                      // enter critical region
       pilotState = state;
@@ -228,7 +228,7 @@ public class GeneralRepos
    *     @param state hostess state
    */
 
-   public void setHostessState (Hostess hostess, int state)
+   public void setHostessState (int state)
    {
       access.down ();                                      // enter critical region
       hostessState = state;

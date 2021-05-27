@@ -110,8 +110,8 @@ public class ArrivalAirport {
         access.down();
         repos.subtractInF();
         repos.addPTAL();
-        ((Passenger) Thread.currentThread()).setPassengerState(3);
-        repos.setPassengerState(((Passenger) Thread.currentThread()).getPassengerId(),3);
+        ((ArrivalAirportProxy) Thread.currentThread()).setPassengerState(3);
+        repos.setPassengerState(((DepartureAirportProxy) Thread.currentThread()).getPassengerId(),3);
         nPassengerArrived ++;
         nOut ++;
         access.up();

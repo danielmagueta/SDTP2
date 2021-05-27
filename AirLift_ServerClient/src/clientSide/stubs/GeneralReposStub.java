@@ -224,7 +224,7 @@ public class GeneralReposStub
    *     @param state pilot state
    */
 
-   public void setPilotState (Pilot pilot, int state)
+   public void setPilotState (int state)
    {
       ClientCom com;                                                 // communication channel
       Message outMessage,                                            // outgoing message
@@ -255,7 +255,7 @@ public class GeneralReposStub
    *     @param state hostess state
    */
 
-   public void setHostessState (Hostess hostess, int state)
+   public void setHostessState (int state)
    {
       ClientCom com;                                                 // communication channel
       Message outMessage,                                            // outgoing message
