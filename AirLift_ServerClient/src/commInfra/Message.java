@@ -55,11 +55,6 @@ public class Message implements Serializable
 
    private int int_val = -1;
    
-  /**
-   *  Boolean value 
-   */
-
-   private boolean bool_val = false;
 
   /**
    *  Name of the logging file.
@@ -84,104 +79,61 @@ public class Message implements Serializable
    *  Message instantiation (form 2).
    *
    *     @param type message type
-   *     @param id passenger
-   *     @param state passenger
+   *     @param int_val1 first integer
+   *     @param int_val2 second integer
    */
 
-   public Message (int type, int id, int state)
+   public Message (int type, int int_val1, int int_val2)
    {
       msgType = type;
-      if ((msgType == MessageType.STBST) || (msgType == MessageType.CALLCUST) || (msgType == MessageType.RPAYDONE))
-         { passengerId= id;
-           passengerState = state;
+      if ((msgType == MessageType.PASSID) || (msgType == MessageType.WAITNEXTPASSENGER))
+         { hostessState = int_val1;
+           int_val = int_val2;
          }
-         else if ((msgType == MessageType.STCST) || (msgType == MessageType.REQCUTH) || (msgType == MessageType.CUTHDONE) ||
-                  (msgType == MessageType.BSHOPF))
-                 { custId= id;
-                   custState = state;
-                 }
-                 else { GenericIO.writelnString ("Message type = " + msgType + ": non-implemented instantiation!");
-                        System.exit (1);
-                      }
+      else  
+         { passengerId= int_val1;
+           passengerState = int_val2;
+         }
+                
    }
 
   /**
    *  Message instantiation (form 3).
    *
    *     @param type message type
-   *     @param id barber identification
+   *     @param int_val hostess or pilot state / integer value to pass
    */
 
-   public Message (int type, int state)
+   public Message (int type, int int_val)
    {
       msgType = type;
-      barbId= id;
+      if ((msgType == MessageType.NOUT) || (msgType == MessageType.RECEIVEPASSARRIVED) || (msgType == MessageType.SETNOUT)
+              || (msgType == MessageType.NINF) || (msgType == MessageType.SETNINF))
+         { this.int_val = int_val;
+         }
+      else if ((msgType == MessageType.PLANEREADY) || (msgType == MessageType.PLANEREADYDONE) || (msgType == MessageType.WAITALL)
+              || (msgType == MessageType.WAITALLDONE) || (msgType == MessageType.PARK) || (msgType == MessageType.PARKDONE) 
+              || (msgType == MessageType.PILOTSTATE))
+         { pilotState = int_val;
+         }
+      else  
+         { 
+           hostessState = int_val;
+         }
    }
+
 
   /**
    *  Message instantiation (form 4).
    *
    *     @param type message type
-   *     @param id barber identification
-   *     @param endOP end of operations flag
-   */
-
-   public Message (int type, int id, boolean endOp)
-   {
-      msgType = type;
-      barbId= id;
-      this.endOp = endOp;
-   }
-
-  /**
-   *  Message instantiation (form 5).
-   *
-   *     @param type message type
-   *     @param barbId barber identification
-   *     @param barbState barber state
-   *     @param custId customer identification
-   */
-
-   public Message (int type, int barbId, int barbState, int custId)
-   {
-      msgType = type;
-      this.barbId= barbId;
-      this.barbState = barbState;
-      this.custId= custId;
-   }
-
-  /**
-   *  Message instantiation (form 6).
-   *
-   *     @param type message type
-   *     @param barbId barber identification
-   *     @param barbState barber state
-   *     @param custId customer identification
-   *     @param custState customer state
-   */
-
-   public Message (int type, int barbId, int barbState, int custId, int custState)
-   {
-      msgType = type;
-      this.barbId= barbId;
-      this.barbState = barbState;
-      this.custId= custId;
-      this.custState = custState;
-   }
-
-  /**
-   *  Message instantiation (form 7).
-   *
-   *     @param type message type
    *     @param name name of the logging file
-   *     @param nIter number of iterations of the customer life cycle
    */
 
-   public Message (int type, String name, int nIter)
+   public Message (int type, String name)
    {
       msgType = type;
       fName= name;
-      this.nIter = nIter;
    }
 
   /**
@@ -196,60 +148,62 @@ public class Message implements Serializable
    }
 
   /**
-   *  Getting barber identification.
+   *  Getting passenger identification.
    *
-   *     @return barber identification
+   *     @return passenger identification
    */
 
-   public int getBarbId ()
+   public int getPassengerId ()
    {
-      return (barbId);
+      return (passengerId);
    }
 
   /**
-   *  Getting barber state.
+   *  Getting passenger state.
    *
-   *     @return barber state
+   *     @return passenger state
    */
 
-   public int getBarbState ()
+   public int getPassengerState ()
    {
-      return (barbState);
+      return (passengerState);
    }
+
 
   /**
-   *  Getting customer identification.
+   *  Getting pilot state.
    *
-   *     @return customer identification
+   *     @return pilot state
    */
 
-   public int getCustId ()
+   public int getPilotState ()
    {
-      return (custId);
+      return (pilotState);
    }
+   
+  /**
+   *  Getting hostess state.
+   *
+   *     @return hostess state
+   */
+
+   public int getHostessState ()
+   {
+      return (hostessState);
+   }
+
 
   /**
-   *  Getting customer state.
+   *  Getting integer value.
    *
-   *     @return customer state
+   *     @return integer value
    */
 
-   public int getCustState ()
+   public int getIntVal ()
    {
-      return (custState);
+      return (int_val);
    }
-
-  /**
-   *  Getting end of operations flag (barber).
-   *
-   *     @return end of operations flag
-   */
-
-   public boolean getEndOp ()
-   {
-      return (endOp);
-   }
-
+   
   /**
    *  Getting name of logging file.
    *
@@ -261,16 +215,6 @@ public class Message implements Serializable
       return (fName);
    }
 
-  /**
-   *  Getting the number of iterations of the customer life cycle.
-   *
-   *     @return number of iterations of the customer life cycle
-   */
-
-   public int getNIter ()
-   {
-      return (nIter);
-   }
 
   /**
    *  Printing the values of the internal fields.
@@ -289,7 +233,6 @@ public class Message implements Serializable
               "\nPassenger Id = " + passengerId +
               "\nPassenger State = " + passengerState +
               "\nInteger Value = " + int_val +
-              "\nBoolean Value = " + bool_val +
               "\nName of logging file = " + fName);
       
    }

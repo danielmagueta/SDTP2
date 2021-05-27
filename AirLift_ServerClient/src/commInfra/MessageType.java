@@ -314,6 +314,169 @@ public class MessageType
 
    public static final int SHUTDOWNDONE = 51;
    
+   /**
+   *  Add INQ (server request).
+   */
+
+   public static final int ADDINQ = 52;
+   
+   /**
+   *  Add INQ (reply).
+   */
+
+   public static final int ADDINQDONE = 53;
+   
+   /**
+   *  Subtract INQ (server request).
+   */
+
+   public static final int SUBTRACTINQ = 54;
+   
+   /**
+   *  Subtract INQ (reply).
+   */
+
+   public static final int SUBTRACTINQDONE = 55;
+   
+   /**
+   *  Add INF (server request).
+   */
+
+   public static final int ADDINF = 56;
+   
+   /**
+   *  Add INF (reply).
+   */
+
+   public static final int ADDINFDONE = 57;
+   
+   /**
+   *  Subtract INF (server request).
+   */
+
+   public static final int SUBTRACTINF = 58;
+   
+   /**
+   *  Subtract INF (reply).
+   */
+
+   public static final int SUBTRACTINFDONE = 59;
+   
+   
+   /**
+   *  Add PTAL (server request).
+   */
+
+   public static final int ADDPTAL = 60;
+   
+   /**
+   *  Add PTAL (reply).
+   */
+
+   public static final int ADDPTALDONE = 61;
+   
+   
+   /**
+   *  Set Pilot State in repository (server request).
+   */
+
+   public static final int PILOTSTATE = 62;
+   
+   /**
+   *  Set Pilot State in repository (reply).
+   */
+
+   public static final int PILOTSTATEDONE = 63;
+   
+   /**
+   *  Set Hostess State in repository (server request).
+   */
+
+   public static final int HOSTESSSTATE = 64;
+   
+   /**
+   *  Set HOSTESS State in repository (reply).
+   */
+
+   public static final int HOSTESSSTATEDONE = 65;
+   
+   /**
+   *  Set Passenger State in repository (server request).
+   */
+
+   public static final int PASSENGERSTATE = 66;
+   
+   /**
+   *  Set Passenger State in repository (reply).
+   */
+
+   public static final int PASSENGERSTATEDONE = 67;
+   
+   /**
+   *  Report boarding in repository (server request).
+   */
+
+   public static final int REPORTBOARDING = 68;
+   
+   /**
+   *  Report boarding in repository (reply).
+   */
+
+   public static final int REPORTBOARDINGDONE = 69;
+   
+   
+   /**
+   *  Report check in repository (server request).
+   */
+
+   public static final int REPORTCHECK = 70;
+   
+   /**
+   *  Report check in repository (reply).
+   */
+
+   public static final int REPORTCHECKDONE = 71;
+   
+   /**
+   *  Report departed in repository (server request).
+   */
+
+   public static final int REPORTDEPARTED = 72;
+   
+   /**
+   *  Report departed in repository (reply).
+   */
+
+   public static final int REPORTDEPARTEDDONE = 73;
+   
+   /**
+   *  Report arrived in repository (server request).
+   */
+
+   public static final int REPORARRIVED = 74;
+   
+   /**
+   *  Report arrived in repository (reply).
+   */
+
+   public static final int REPORTARRIVEDDONE = 75;
+   
+   /**
+   *  Report returning in repository (server request).
+   */
+
+   public static final int REPORTRETURNING = 76;
+   
+   /**
+   *  Report returning in repository (reply).
+   */
+
+   public static final int REPORTRETURNINGDONE = 77;
+   
+   
+   
+   
+   
    
    
 }
