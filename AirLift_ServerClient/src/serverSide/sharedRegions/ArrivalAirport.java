@@ -43,6 +43,13 @@ public class ArrivalAirport {
    *  Number of passengers that have leaved the plane.
    */
    private int nOut;
+   
+   
+  /**
+   *   Number of entity groups requesting the shutdown.
+   */
+
+   private int nEntities;
 
    
    /**
@@ -59,6 +66,7 @@ public class ArrivalAirport {
       access.up ();
       nPassengerArrived = 0;
       nOut = 0;
+      nEntities = 0;
       
    }
    
@@ -110,5 +118,17 @@ public class ArrivalAirport {
 
 
     }
+    
+    /**
+   *   Operation server shutdown.
+   *
+   */
+
+   public void shutdown ()
+   {
+       nEntities += 1;
+       if (nEntities >= 3)
+          ArrivalAirportMain.waitConnection = false;
+   }    
 
 }

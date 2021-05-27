@@ -1,27 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clientSide.stubs;
 
+import serverSide.main.*;
+import clientSide.entities.*;
+import commInfra.*;
+import genclass.GenericIO;
+
 /**
+ *  Stub to the departure airport.
  *
- * @author danimag
+ *    It instantiates a remote reference to the departure airport.
+ *    Implementation of a client-server model of type 2 (server replication).
+ *    Communication is based on a communication channel under the TCP protocol.
  */
-public class DepartureAirportStub {
-    
-          /**
-   *  @return number of passengers in queue .
+
+
+public class DepartureAirportStub
+{
+  /**
+   *  Name of the platform where is located the departure airport server.
    */
-    
-    public int getnINQ() {
-        return 1;
-    }
 
+   private String serverHostName;
 
-    
-    
+  /**
+   *  Port number for listening to service requests.
+   */
+
+   private int serverPortNumb;
+
+  /**
+   *   Instantiation of a stub to the barber shop.
+   *
+   *     @param serverHostName name of the platform where is located the departure airport server
+   *     @param serverPortNumb port number for listening to service requests
+   */
+
+   public DepartureAirportStub (String serverHostName, int serverPortNumb)
+   {
+      this.serverHostName = serverHostName;
+      this.serverPortNumb = serverPortNumb;
+   }
+     
 
 //pilot life cicle
    
@@ -34,7 +53,27 @@ public class DepartureAirportStub {
     
     public void endHostess ()
     {
-      
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.ENDHOSTESS);
+
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.ENDHOSTESSDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();    
     }
     
   /**
@@ -46,7 +85,32 @@ public class DepartureAirportStub {
     
     public void informPlaneReadyForBoarding ()
     {
-       
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.PLANEREADY, ((Pilot) Thread.currentThread ()).getPilotState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.PLANEREADYDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getPilotState () < PilotStates.AT_TRANSFER_GATES) || (inMessage.getPilotState () > PilotStates.FLYING_BACK))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid pilot state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Pilot) Thread.currentThread ()).setPilotState (inMessage.getPilotState ());       
 
     }
     
@@ -59,7 +123,32 @@ public class DepartureAirportStub {
     
     public void waitForAllInBoard ()
     {
-      
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.WAITALL, ((Pilot) Thread.currentThread ()).getPilotState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.WAITALLDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getPilotState () < PilotStates.AT_TRANSFER_GATES) || (inMessage.getPilotState () > PilotStates.FLYING_BACK))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid pilot state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Pilot) Thread.currentThread ()).setPilotState (inMessage.getPilotState ());         
     }
     
 
@@ -69,8 +158,34 @@ public class DepartureAirportStub {
    *  It is called by a pilot when he parks the plane at the transfer gate, .
    *
    */
-    public void parkAtTransferGate (){
-         
+    public void parkAtTransferGate ()
+    {
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.PARK, ((Pilot) Thread.currentThread ()).getPilotState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.PARKDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getPilotState () < PilotStates.AT_TRANSFER_GATES) || (inMessage.getPilotState () > PilotStates.FLYING_BACK))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid pilot state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Pilot) Thread.currentThread ()).setPilotState (inMessage.getPilotState ());            
     }
     
     //hostess life cicle
@@ -83,7 +198,32 @@ public class DepartureAirportStub {
    */
     public void prepareForPassBoarding ()
     {
-        
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.PREPAREBOARDING, ((Hostess) Thread.currentThread ()).getHostessState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.PREPAREBOARDINGDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getHostessState () < HostessStates.WAIT_FOR_NEXT_FLIGHT) || (inMessage.getHostessState () > HostessStates.READY_TO_FLY))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid hostess state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Hostess) Thread.currentThread ()).setHostessState (inMessage.getHostessState ());           
     }
     
     
@@ -96,7 +236,33 @@ public class DepartureAirportStub {
    */
     public int checkDocuments ()
     {
-        return 1;
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.CHECKDOC, ((Hostess) Thread.currentThread ()).getHostessState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.PASSID))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getHostessState () < HostessStates.WAIT_FOR_NEXT_FLIGHT) || (inMessage.getHostessState () > HostessStates.READY_TO_FLY))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid hostess state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Hostess) Thread.currentThread ()).setHostessState (inMessage.getHostessState ()); 
+      return inMessage.getIntVal();
     }
 
 
@@ -113,8 +279,26 @@ public class DepartureAirportStub {
    */
     public void waitPilot ()
     {
-        
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
 
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.WAITPILOT);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.WAITPILOTDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();         
     }
     
     /**
@@ -128,7 +312,33 @@ public class DepartureAirportStub {
    */
     public boolean waitForNextPassenger (int passengerID)
     {
-        return false;
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.WAITNEXTPASSENGER, ((Hostess) Thread.currentThread ()).getHostessState(), passengerID);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.TAKEOFF) && (inMessage.getMsgType () != MessageType.NOTAKEOFF))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getHostessState () < HostessStates.WAIT_FOR_NEXT_FLIGHT) || (inMessage.getHostessState () > HostessStates.READY_TO_FLY))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid hostess state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Hostess) Thread.currentThread ()).setHostessState (inMessage.getHostessState ()); 
+       return (inMessage.getMsgType() == MessageType.TAKEOFF);
         
         
     }
@@ -141,7 +351,32 @@ public class DepartureAirportStub {
    */
     public void informPlaneReadyToTakeOff ()
     {
-     
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.READYTOTAKEOFF, ((Hostess) Thread.currentThread ()).getHostessState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.READYTOTAKEOFFDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getHostessState () < HostessStates.WAIT_FOR_NEXT_FLIGHT) || (inMessage.getHostessState () > HostessStates.READY_TO_FLY))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid hostess state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Hostess) Thread.currentThread ()).setHostessState (inMessage.getHostessState ());   
     }
     
     /**
@@ -152,7 +387,32 @@ public class DepartureAirportStub {
    */
     public void waitForNextFlight ()
     {
-     
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.WAITNEXTFLIGHT, ((Hostess) Thread.currentThread ()).getHostessState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.WAITNEXTFLIGHTDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getHostessState () < HostessStates.WAIT_FOR_NEXT_FLIGHT) || (inMessage.getHostessState () > HostessStates.READY_TO_FLY))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid hostess state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Hostess) Thread.currentThread ()).setHostessState (inMessage.getHostessState ());        
     }
     
      //passenger life cicle
@@ -166,7 +426,38 @@ public class DepartureAirportStub {
    */
     public void waitInQueue ()
     {
-        
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.WAITINQUEUE, ((Passenger) Thread.currentThread()).getPassengerId()
+              , ((Passenger) Thread.currentThread()).getPassengerState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.WAITINQUEUEDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+        if (inMessage.getPassengerId () != ((Passenger) Thread.currentThread ()).getPassengerId())
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger id!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getPassengerState () < PassengerStates.GOING_TO_AIRPORT) || (inMessage.getPassengerState () > PassengerStates.AT_DESTINATION))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      ((Passenger) Thread.currentThread ()).setPassengerState (inMessage.getPassengerState ());            
     }
     
     /**
@@ -177,8 +468,64 @@ public class DepartureAirportStub {
    */
     public void showDocuments ()
     {
-        
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.SHOWDOC, ((Passenger) Thread.currentThread()).getPassengerId()
+              , ((Passenger) Thread.currentThread()).getPassengerState());
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.SHOWDOCDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+        if (inMessage.getPassengerId () != ((Passenger) Thread.currentThread ()).getPassengerId())
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger id!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      if ((inMessage.getPassengerState () < PassengerStates.GOING_TO_AIRPORT) || (inMessage.getPassengerState () > PassengerStates.AT_DESTINATION))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger state!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();        
         
     }
+    
+    
+   public void shutdown ()
+   {
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())
+      { try
+        { Thread.sleep ((long) (1000));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.SHUTDOWN);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if (inMessage.getMsgType() != MessageType.SHUTDOWNDONE)
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+   }    
+    
 
 }

@@ -46,7 +46,27 @@ public class ArrivalAirportStub
    */
    
     public int getnOut() {
-        return nOut;
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.GETNOUT);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.NOUT))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      return inMessage.getIntVal();
     }
     
     /**
@@ -54,7 +74,26 @@ public class ArrivalAirportStub
    */
     
     public void setnOut(int nOut) {
-        this.nOut = nOut;
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.SETNOUT,nOut);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.SETNOUTDONE))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
     }
    
    
@@ -62,14 +101,34 @@ public class ArrivalAirportStub
    /**
    *    Get number of passengers that have arrived and deboarded already.
    * 
-   *       @return number of passengers that have arrived and deboarded alerady
+   *       @return number of passengers that have arrived and deboarded already
    */
     public int getnPassengerArrived() {
-        return nPassengerArrived;
+      ClientCom com;                                                 // communication channel
+      Message outMessage,                                            // outgoing message
+              inMessage;                                             // incoming message
+
+      com = new ClientCom (serverHostName, serverPortNumb);
+      while (!com.open ())                                           // waits for a connection to be established
+      { try
+        { Thread.currentThread ().sleep ((long) (10));
+        }
+        catch (InterruptedException e) {}
+      }
+      outMessage = new Message (MessageType.GETPASSARRIVED);
+      com.writeObject (outMessage);
+      inMessage = (Message) com.readObject ();
+      if ((inMessage.getMsgType () != MessageType.RECEIVEPASSARRIVED))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
+           GenericIO.writelnString (inMessage.toString ());
+           System.exit (1);
+         }
+      com.close ();
+      return inMessage.getIntVal();
     }
    
   
-        /**
+   /**
     *  Announcing arrival to the arrival airport.
     *
     *  It is called by a pilot when the plane arrives at the arrival airport and is ready to initiate the deboarding.
@@ -88,255 +147,34 @@ public class ArrivalAirportStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.REQCUTH, ((Customer) Thread.currentThread ()).getCustomerId (),
-                                ((Customer) Thread.currentThread ()).getCustomerState ());
+      outMessage = new Message (MessageType.LEAVE, ((Passenger) Thread.currentThread ()).getPassengerId (),
+                                ((Passenger) Thread.currentThread ()).getPassengerState ());
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
-      if ((inMessage.getMsgType () != MessageType.CUTHDONE) && (inMessage.getMsgType() != MessageType.BSHOPF))
+      if ((inMessage.getMsgType () != MessageType.LEAVEDONE))
          { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
            GenericIO.writelnString (inMessage.toString ());
            System.exit (1);
          }
-      if (inMessage.getCustId () != ((Customer) Thread.currentThread ()).getCustomerId ())
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer id!");
+      if (inMessage.getPassengerId () != ((Passenger) Thread.currentThread ()).getPassengerId())
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger id!");
            GenericIO.writelnString (inMessage.toString ());
            System.exit (1);
          }
-      if ((inMessage.getCustState () < CustomerStates.DAYBYDAYLIFE) || (inMessage.getCustState () > CustomerStates.CUTTHEHAIR))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer state!");
+      if ((inMessage.getPassengerState () < PassengerStates.GOING_TO_AIRPORT) || (inMessage.getPassengerState () > PassengerStates.AT_DESTINATION))
+         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid passenger state!");
            GenericIO.writelnString (inMessage.toString ());
            System.exit (1);
          }
       com.close ();
-      ((Customer) Thread.currentThread ()).setCustomerState (inMessage.getCustState ());
-      return (inMessage.getMsgType() == MessageType.CUTHDONE);
-      
-      
-        access.down();
-        repos.subtractInF();
-        repos.addPTAL();
-        ((Passenger) Thread.currentThread()).setPassengerState(3);
-        repos.setPassengerState(((Passenger) Thread.currentThread()).getPassengerId(),3);
-        nPassengerArrived ++;
-        nOut ++;
-        access.up();
-
-
+      ((Passenger) Thread.currentThread ()).setPassengerState (inMessage.getPassengerState ());
     }
    
 
 
-   public boolean goCutHair ()
-   {
-      ClientCom com;                                                 // communication channel
-      Message outMessage,                                            // outgoing message
-              inMessage;                                             // incoming message
-
-      com = new ClientCom (serverHostName, serverPortNumb);
-      while (!com.open ())                                           // waits for a connection to be established
-      { try
-        { Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
-      }
-      outMessage = new Message (MessageType.REQCUTH, ((Customer) Thread.currentThread ()).getCustomerId (),
-                                ((Customer) Thread.currentThread ()).getCustomerState ());
-      com.writeObject (outMessage);
-      inMessage = (Message) com.readObject ();
-      if ((inMessage.getMsgType () != MessageType.CUTHDONE) && (inMessage.getMsgType() != MessageType.BSHOPF))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if (inMessage.getCustId () != ((Customer) Thread.currentThread ()).getCustomerId ())
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if ((inMessage.getCustState () < CustomerStates.DAYBYDAYLIFE) || (inMessage.getCustState () > CustomerStates.CUTTHEHAIR))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer state!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      com.close ();
-      ((Customer) Thread.currentThread ()).setCustomerState (inMessage.getCustState ());
-      return (inMessage.getMsgType() == MessageType.CUTHDONE);
-   }
-
-  /**
-   *  Operation go to sleep.
-   *
-   *  It is called by a barber while waiting for customers to be serviced.
-   *
-   *    @return true, if his life cycle has come to an end -
-   *            false, otherwise
-   */
-
-   public boolean goToSleep ()
-   {
-      ClientCom com;                                                 // communication channel
-      Message outMessage,                                            // outgoing message
-              inMessage;                                             // incoming message
-
-      com = new ClientCom (serverHostName, serverPortNumb);
-      while (!com.open ())                                           // waits for a connection to be established
-      { try
-        { Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
-      }
-      outMessage = new Message (MessageType.SLEEP, ((Barber) Thread.currentThread ()).getBarberId ());
-      com.writeObject (outMessage);
-      inMessage = (Message) com.readObject ();
-      if (inMessage.getMsgType () != MessageType.SLEEPDONE)
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if (inMessage.getBarbId () != ((Barber) Thread.currentThread ()).getBarberId ())
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      com.close ();
-      return inMessage.getEndOp ();
-   }
-
-  /**
-   *  Operation call a customer.
-   *
-   *  It is called by a barber if a customer has requested his service.
-   *
-   *    @return customer id
-   */
-
-   public int callACustomer ()
-   {
-      ClientCom com;                                                 // communication channel
-      Message outMessage,                                            // outgoing message
-              inMessage;                                             // incoming message
-
-      com = new ClientCom (serverHostName, serverPortNumb);
-      while (!com.open ())                                           // waits for a connection to be established
-      { try
-        { Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
-      }
-      outMessage = new Message (MessageType.CALLCUST, ((Barber) Thread.currentThread ()).getBarberId (),
-                                ((Barber) Thread.currentThread ()).getBarberState ());
-      com.writeObject (outMessage);
-      inMessage = (Message) com.readObject ();
-      if (inMessage.getMsgType () != MessageType.CCUSTDONE)
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if (inMessage.getBarbId () != ((Barber) Thread.currentThread ()).getBarberId ())
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if ((inMessage.getBarbState () < BarberStates.SLEEPING) || (inMessage.getBarbState () > BarberStates.INACTIVITY))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber state!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if ((inMessage.getCustId () < 0) || (inMessage.getCustId () >= SimulPar.N))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid customer id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      com.close ();
-      ((Barber) Thread.currentThread ()).setBarberState (inMessage.getBarbState ());
-      return inMessage.getCustId ();
-   }
-
-  /**
-   *  Operation receive payment.
-   *
-   *  It is called by a barber after finishing the customer hair cut.
-   *
-   *    @param customerId customer id
-   */
-
-   public void receivePayment (int customerId)
-   {
-      ClientCom com;                                                 // communication channel
-      Message outMessage,                                            // outgoing message
-              inMessage;                                             // incoming message
-
-      com = new ClientCom (serverHostName, serverPortNumb);
-      while (!com.open ())                                           // waits for a connection to be established
-      { try
-        { Thread.currentThread ().sleep ((long) (10));
-        }
-        catch (InterruptedException e) {}
-      }
-      outMessage = new Message (MessageType.RECPAY, ((Barber) Thread.currentThread ()).getBarberId (),
-                                ((Barber) Thread.currentThread ()).getBarberState (), customerId);
-      com.writeObject (outMessage);
-      inMessage = (Message) com.readObject ();
-      if (inMessage.getMsgType () != MessageType.RPAYDONE)
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if (inMessage.getBarbId () != ((Barber) Thread.currentThread ()).getBarberId ())
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if ((inMessage.getBarbState () < BarberStates.SLEEPING) || (inMessage.getBarbState () > BarberStates.INACTIVITY))
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber state!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      ((Barber) Thread.currentThread ()).setBarberState (inMessage.getBarbState ());
-      com.close ();
-   }
-
-  /**
-   *  Operation end of work.
-   *
-   *   New operation.
-   *
-   *      @param barbId barber id
-   */
-
-   public void endOperation (int barberId)
-   {
-      ClientCom com;                                                 // communication channel
-      Message outMessage,                                            // outgoing message
-              inMessage;                                             // incoming message
-
-      com = new ClientCom (serverHostName, serverPortNumb);
-      while (!com.open ())
-      { try
-        { Thread.sleep ((long) (1000));
-        }
-        catch (InterruptedException e) {}
-      }
-      outMessage = new Message (MessageType.ENDOP, barberId);
-      com.writeObject (outMessage);
-      inMessage = (Message) com.readObject ();
-      if (inMessage.getMsgType() != MessageType.EOPDONE)
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      if (inMessage.getBarbId () != barberId)
-         { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid barber id!");
-           GenericIO.writelnString (inMessage.toString ());
-           System.exit (1);
-         }
-      com.close ();
-   }
-
    /**
    *   Operation server shutdown.
    *
-   *   New operation.
    */
 
    public void shutdown ()
@@ -352,10 +190,10 @@ public class ArrivalAirportStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.SHUT);
+      outMessage = new Message (MessageType.SHUTDOWN);
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
-      if (inMessage.getMsgType() != MessageType.SHUTDONE)
+      if (inMessage.getMsgType() != MessageType.SHUTDOWNDONE)
          { GenericIO.writelnString ("Thread " + Thread.currentThread ().getName () + ": Invalid message type!");
            GenericIO.writelnString (inMessage.toString ());
            System.exit (1);

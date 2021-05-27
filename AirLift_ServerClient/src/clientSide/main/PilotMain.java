@@ -13,7 +13,7 @@ import genclass.GenericIO;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-public class HostessMain
+public class PilotMain
 {
   /**
    *  Main method.
@@ -34,8 +34,8 @@ public class HostessMain
    {
       String DepartureAirportServerHostName;                             // name of the platform where is located the departure airport server
       int DepartureAirportServerPortNumb = -1;                           // port number for listening to service requests
-      String PlaneAirportServerHostName;                                 // name of the platform where is located the plane server
-      int PlaneAirportServerPortNumb = -1;                               // port number for listening to service requests
+      String PlaneServerHostName;                                        // name of the platform where is located the plane server
+      int PlaneServerPortNumb = -1;                                      // port number for listening to service requests
       String ArrivalAirportServerHostName;                               // name of the platform where is located the arrival airport server
       int ArrivalAirportServerPortNumb = -1;                             // port number for listening to service requests
       String genReposServerHostName;                                     // name of the platform where is located the general repository server
@@ -44,7 +44,7 @@ public class HostessMain
       Pilot pilot;                                                       // pilot thread
       DepartureAirportStub dAirportStub;                                 // remote reference to the departure airport
       PlaneStub planeStub;                                               // remote reference to the plane          
-      DepartureAirportStub aAirportStub;                                 // remote reference to the arrival airport
+      ArrivalAirportStub aAirportStub;                                   // remote reference to the arrival airport
       GeneralReposStub genReposStub;                                     // remote reference to the general repository
 
 
@@ -113,7 +113,7 @@ public class HostessMain
      /* problem initialization */
       
       dAirportStub = new DepartureAirportStub(DepartureAirportServerHostName, DepartureAirportServerPortNumb);
-      planeStub = new PlaneStub(PlaneServerHostName, PlaneServerPortName);
+      planeStub = new PlaneStub(PlaneServerHostName, PlaneServerPortNumb);
       aAirportStub = new ArrivalAirportStub(ArrivalAirportServerHostName, ArrivalAirportServerPortNumb);
       genReposStub = new GeneralReposStub (genReposServerHostName, genReposServerPortNumb);
       genReposStub.initSimul (fileName);
@@ -129,13 +129,13 @@ public class HostessMain
       try
       { pilot.join ();
       }
-        catch (InterruptedException e) {}
-        GenericIO.writelnString ("The pilot has terminated.");
-      }
-      GenericIO.writelnString ();
+      catch (InterruptedException e) {}
+      GenericIO.writelnString ("The pilot has terminated.");
+      
+      GenericIO.writelnString();
       dAirportStub.shutdown();
       planeStub.shutdown();
-      aAirportStub.shutdown ();
-      genReposStub.shutdown ();
+      aAirportStub.shutdown();
+      genReposStub.shutdown();
    }
 }

@@ -6,6 +6,9 @@ import clientSide.entities.*;
 import clientSide.stubs.*;
 import commInfra.*;
 import genclass.GenericIO;
+import static java.lang.Thread.sleep;
+
+
 
 /**
  *    Departure Airport.
@@ -97,6 +100,13 @@ public class DepartureAirport {
    */
    
    private int passengersLEFT;
+
+   
+  /**
+   *   Number of entity groups requesting the shutdown.
+   */
+
+   private int nEntities;
    
 
    
@@ -131,16 +141,8 @@ public class DepartureAirport {
      nINF = 0;
      ntotalINF = 0;
      passengersLEFT = SimulPar.N;
+     nEntities = 0;
    }
-   
-      /**
-   *  @return number of passengers in queue .
-   */
-    
-    public int getnINQ() {
-        return nINQ;
-    }
-
 
     
     
@@ -390,6 +392,18 @@ public class DepartureAirport {
         inQueue[passengerID].down();
         
     }
+    
+    /**
+   *   Operation server shutdown.
+   *
+   */
+
+   public void shutdown ()
+   {
+       nEntities += 1;
+       if (nEntities >= 3)
+          DepartureAirportMain.waitConnection = false;
+   }    
 
     
 }

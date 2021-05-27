@@ -37,7 +37,7 @@ public class HostessMain
       int genReposServerPortNumb = -1;                                   // port number for listening to service requests
       Hostess hostess;                                                   // hostess thread
       DepartureAirportStub dAirportStub;                                 // remote reference to the departure airport
-      DepartureAirportStub aAirportStub;                                 // remote reference to the arrival airport
+      ArrivalAirportStub aAirportStub;                                   // remote reference to the arrival airport
       GeneralReposStub genReposStub;                                     // remote reference to the general repository
 
 
@@ -106,12 +106,12 @@ public class HostessMain
       try
       { hostess.join ();
       }
-        catch (InterruptedException e) {}
-        GenericIO.writelnString ("The hostess has terminated.");
-      }
-      GenericIO.writelnString ();
+      catch (InterruptedException e) {}
+      GenericIO.writelnString ("The hostess has terminated.");
+      
+      GenericIO.writelnString();
       dAirportStub.shutdown();
-      aAirportStub.shutdown ();
-      genReposStub.shutdown ();
+      aAirportStub.shutdown();
+      genReposStub.shutdown();
    }
 }

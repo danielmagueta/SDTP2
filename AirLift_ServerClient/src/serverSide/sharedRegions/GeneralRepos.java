@@ -110,24 +110,13 @@ public class GeneralRepos
    *     @param logFileName name of the logging file
    */
 
-  public synchronized void initSimul (String logFileName)
+  public void initSimul (String logFileName)
   {
      if (!Objects.equals (logFileName, ""))
         this.logFileName = logFileName;
      reportInitialStatus ();
   }
    
-    /**
-   *   Operation server shutdown.
-   *
-   */
-
-   public synchronized void shutdown ()
-   {
-       nEntities += 1;
-       if (nEntities >= 3)
-          GeneralReposMain.waitConnection = false;
-   }
   
   
    /**
@@ -458,4 +447,17 @@ public class GeneralRepos
          }
       nFlight++;
    }
+   
+  /**
+   *   Operation server shutdown.
+   *
+   */
+
+   public void shutdown ()
+   {
+       nEntities += 1;
+       if (nEntities >= 3)
+          GeneralReposMain.waitConnection = false;
+   }
+   
 }

@@ -13,7 +13,7 @@ import genclass.GenericIO;
  *    Communication is based on a communication channel under the TCP protocol.
  */
 
-public class HostessMain
+public class PassengerMain
 {
   /**
    *  Main method.
@@ -33,8 +33,8 @@ public class HostessMain
    {
       String DepartureAirportServerHostName;                             // name of the platform where is located the departure airport server
       int DepartureAirportServerPortNumb = -1;                           // port number for listening to service requests
-      String PlaneAirportServerHostName;                                 // name of the platform where is located the plane server
-      int PlaneAirportServerPortNumb = -1;                               // port number for listening to service requests
+      String PlaneServerHostName;                                        // name of the platform where is located the plane server
+      int PlaneServerPortNumb = -1;                                      // port number for listening to service requests
       String ArrivalAirportServerHostName;                               // name of the platform where is located the arrival airport server
       int ArrivalAirportServerPortNumb = -1;                             // port number for listening to service requests
       String genReposServerHostName;                                     // name of the platform where is located the general repository server
@@ -42,7 +42,7 @@ public class HostessMain
       Passenger [] passenger = new Passenger [SimulPar.N];               // array of passenger threads
       DepartureAirportStub dAirportStub;                                 // remote reference to the departure airport
       PlaneStub planeStub;                                               // remote reference to the plane          
-      DepartureAirportStub aAirportStub;                                 // remote reference to the arrival airport
+      ArrivalAirportStub aAirportStub;                                   // remote reference to the arrival airport
       GeneralReposStub genReposStub;                                     // remote reference to the general repository
 
 
@@ -110,10 +110,9 @@ public class HostessMain
      /* problem initialization */
       
       dAirportStub = new DepartureAirportStub(DepartureAirportServerHostName, DepartureAirportServerPortNumb);
-      planeStub = new PlaneStub(PlaneServerHostName, PlaneServerPortName);
+      planeStub = new PlaneStub(PlaneServerHostName, PlaneServerPortNumb);
       aAirportStub = new ArrivalAirportStub(ArrivalAirportServerHostName, ArrivalAirportServerPortNumb);
       genReposStub = new GeneralReposStub (genReposServerHostName, genReposServerPortNumb);
-      genReposStub.initSimul (fileName);
       
       for (int i = 0; i < SimulPar.N; i++)
             passenger[i] = new Passenger ("Passenger_" + (i+1), i, dAirportStub, planeStub, aAirportStub);

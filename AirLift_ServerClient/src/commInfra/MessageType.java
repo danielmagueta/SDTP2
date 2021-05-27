@@ -144,7 +144,7 @@ public class MessageType
    *  Hostess will wait for next flight (reply).
    */
 
-   public static final int WAITFORNEXTFLIGHTDONE = 23;
+   public static final int WAITNEXTFLIGHTDONE = 23;
   
    /**
    *  Hostess/Pilot asks for whom many passengers arrived in total (service request).
@@ -453,7 +453,7 @@ public class MessageType
    *  Report arrived in repository (server request).
    */
 
-   public static final int REPORARRIVED = 74;
+   public static final int REPORTARRIVED = 74;
    
    /**
    *  Report arrived in repository (reply).

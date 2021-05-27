@@ -63,6 +63,13 @@ public class Plane {
    *
    *    @param repos reference to the general repository
    */
+   
+   
+  /**
+   *   Number of entity groups requesting the shutdown.
+   */
+
+   private int nEntities;
 
    public Plane (GeneralReposStub repos)
    {
@@ -84,6 +91,7 @@ public class Plane {
         passengerINF = null;
         System.exit (1);
       }
+      nEntities = 0;
    }
 
     public int getnINF() {
@@ -221,6 +229,17 @@ public class Plane {
         in_flight[passengerID].down();
     }
 
+    /**
+   *   Operation server shutdown.
+   *
+   */
+
+   public void shutdown ()
+   {
+       nEntities += 1;
+       if (nEntities >= 2)
+          PlaneMain.waitConnection = false;
+   }
     
     
 
