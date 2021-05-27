@@ -237,7 +237,7 @@ public class GeneralReposStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.PILOTSTATE, ((Pilot) Thread.currentThread ()).getPilotState());
+      outMessage = new Message (MessageType.PILOTSTATE, state);
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
       if ((inMessage.getMsgType () != MessageType.PILOTSTATEDONE))
@@ -268,7 +268,7 @@ public class GeneralReposStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.HOSTESSSTATE, ((Hostess) Thread.currentThread ()).getHostessState());
+      outMessage = new Message (MessageType.HOSTESSSTATE, state);
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
       if ((inMessage.getMsgType () != MessageType.HOSTESSSTATEDONE))
@@ -300,8 +300,7 @@ public class GeneralReposStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.PASSENGERSTATE, ((Passenger) Thread.currentThread()).getPassengerId()
-              , ((Passenger) Thread.currentThread()).getPassengerState());
+      outMessage = new Message (MessageType.PASSENGERSTATE, id, state);
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
       if ((inMessage.getMsgType () != MessageType.PASSENGERSTATEDONE))
@@ -355,7 +354,7 @@ public class GeneralReposStub
         }
         catch (InterruptedException e) {}
       }
-      outMessage = new Message (MessageType.REPORTCHECK);
+      outMessage = new Message (MessageType.REPORTCHECK, id);
       com.writeObject (outMessage);
       inMessage = (Message) com.readObject ();
       if (inMessage.getMsgType() != MessageType.REPORTCHECKDONE)

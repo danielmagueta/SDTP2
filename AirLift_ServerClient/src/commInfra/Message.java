@@ -108,7 +108,7 @@ public class Message implements Serializable
    {
       msgType = type;
       if ((msgType == MessageType.NOUT) || (msgType == MessageType.RECEIVEPASSARRIVED) || (msgType == MessageType.SETNOUT)
-              || (msgType == MessageType.NINF) || (msgType == MessageType.SETNINF))
+              || (msgType == MessageType.NINF) || (msgType == MessageType.SETNINF) || (msgType == MessageType.REPORTCHECK))
          { this.int_val = int_val;
          }
       else if ((msgType == MessageType.PLANEREADY) || (msgType == MessageType.PLANEREADYDONE) || (msgType == MessageType.WAITALL)

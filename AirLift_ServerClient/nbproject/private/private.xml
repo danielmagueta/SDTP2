@@ -3,11 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/clientSide/stubs/ArrivalAirportStub.java</file>
-            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/clientSide/main/HostessMain.java</file>
-            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/clientSide/main/PilotMain.java</file>
-            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/clientSide/main/package-info.java</file>
-            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/clientSide/entities/Hostess.java</file>
+            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/serverSide/sharedRegions/PlaneInterface.java</file>
+            <file>file:/home/danimag/Desktop/SDTP2/AirLift_ServerClient/src/commInfra/Message.java</file>
         </group>
     </open-files>
 </project-private>
