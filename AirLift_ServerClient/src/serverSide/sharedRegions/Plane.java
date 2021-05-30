@@ -20,11 +20,6 @@ import static java.lang.Thread.sleep;
 
 public class Plane {
  
-  /**
-   *  Reference to passenger threads.
-   */
-
-   private final Passenger [] passenger;
    
     /**
    *  Reference to number of passengers in flight.
@@ -74,9 +69,6 @@ public class Plane {
    public Plane (GeneralReposStub repos)
    {
       nINF = 0;
-       passenger = new Passenger [SimulPar.N];
-      for (int i = 0; i < SimulPar.N; i++)
-        passenger[i] = null;
       this.repos = repos;
       access = new Semaphore ();
       access.up ();
@@ -165,7 +157,7 @@ public class Plane {
     {
         access.down();
         repos.addInF();
-        int passengerID = ((Passenger) Thread.currentThread()).getPassengerId();     
+        int passengerID = ((PlaneProxy) Thread.currentThread()).getPassengerId();     
         try
         { passengerINF.write (passengerID);                    
         }

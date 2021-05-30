@@ -117,7 +117,7 @@ public class DepartureAirportInterface
                                                 break;
         case MessageType.PARK:                  ((DepartureAirportProxy) Thread.currentThread()).setPilotState(inMessage.getPilotState ());
                                                 dAirport.parkAtTransferGate();
-                                                outMessage = new Message (MessageType.PLANEREADYDONE,((DepartureAirportProxy)Thread.currentThread()).getPilotState());
+                                                outMessage = new Message (MessageType.PARKDONE,((DepartureAirportProxy)Thread.currentThread()).getPilotState());
                                                 break;
         case MessageType.ENDHOSTESS:            dAirport.endHostess();
                                                 outMessage = new Message (MessageType.ENDHOSTESSDONE);
@@ -141,11 +141,11 @@ public class DepartureAirportInterface
                                                 break;
         case MessageType.READYTOTAKEOFF:        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(inMessage.getHostessState ());
                                                 dAirport.informPlaneReadyToTakeOff();
-                                                outMessage = new Message (MessageType.READYTOTAKEOFF,((DepartureAirportProxy)Thread.currentThread()).getHostessState());
+                                                outMessage = new Message (MessageType.READYTOTAKEOFFDONE,((DepartureAirportProxy)Thread.currentThread()).getHostessState());
                                                 break;
         case MessageType.WAITNEXTFLIGHT:        ((DepartureAirportProxy) Thread.currentThread()).setHostessState(inMessage.getHostessState ());
                                                 dAirport.waitForNextFlight();
-                                                outMessage = new Message (MessageType.READYTOTAKEOFF,((DepartureAirportProxy)Thread.currentThread()).getHostessState());
+                                                outMessage = new Message (MessageType.WAITNEXTFLIGHTDONE, ((DepartureAirportProxy)Thread.currentThread()).getHostessState());
                                                 break;
         case MessageType.WAITINQUEUE:           ((DepartureAirportProxy) Thread.currentThread()).setPassengerId(inMessage.getPassengerId());
                                                 ((DepartureAirportProxy) Thread.currentThread()).setPassengerState(inMessage.getPassengerState()); 

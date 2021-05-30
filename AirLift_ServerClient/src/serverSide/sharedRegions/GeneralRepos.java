@@ -83,7 +83,6 @@ public class GeneralRepos
   /**
    *   Instantiation of a general repository object.
    *
-   *     @param logFileName name of the logging file
    */
 
    public GeneralRepos ()
@@ -209,7 +208,6 @@ public class GeneralRepos
   /**
    *   Set pilot state.
    *
-   *     @param pilot pilot
    *     @param state pilot state
    */
 
@@ -224,7 +222,6 @@ public class GeneralRepos
   /**
    *   Set hostess state.
    *
-   *     @param hostess hostess
    *     @param state hostess state
    */
 

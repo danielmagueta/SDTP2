@@ -45,7 +45,7 @@ public class GeneralReposInterface
 
    public Message processAndReply (Message inMessage) throws MessageException
    {
-      Message outMessage = null;                                     // mensagem de resposta
+       Message outMessage = null;                                     // mensagem de resposta
 
      /* validation of the incoming message */
 

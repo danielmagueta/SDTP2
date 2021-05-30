@@ -359,7 +359,7 @@ public class DepartureAirport {
     {
         nINQ ++;
         access.down();
-        int passengerID = ((Passenger) Thread.currentThread()).getPassengerId();
+        int passengerID = ((DepartureAirportProxy) Thread.currentThread()).getPassengerId();
         try
         { passengerFIFO.write (passengerID); 
         

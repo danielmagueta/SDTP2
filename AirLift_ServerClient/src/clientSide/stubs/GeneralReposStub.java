@@ -220,7 +220,6 @@ public class GeneralReposStub
   /**
    *   Set pilot state.
    *
-   *     @param pilot pilot
    *     @param state pilot state
    */
 
@@ -251,7 +250,6 @@ public class GeneralReposStub
   /**
    *   Set hostess state.
    *
-   *     @param hostess hostess
    *     @param state hostess state
    */
 

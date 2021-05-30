@@ -64,11 +64,12 @@ public class GeneralReposProxy extends Thread implements PassengerCloning, Hoste
    *     @param reposInter interface to the general repository
    */
 
-   public GeneralReposProxy (ServerCom sconi, GeneralReposInterface repostInter)
+   public GeneralReposProxy (ServerCom sconi, GeneralReposInterface reposInter)
    {
       super ("GeneralReposProxy_" + GeneralReposProxy.getProxyId ());
       this.sconi = sconi;
       this.reposInter = reposInter;
+
    }
 
   /**
@@ -95,7 +96,7 @@ public class GeneralReposProxy extends Thread implements PassengerCloning, Hoste
         nProxy += 1;
       }
       return proxyId;
-   }
+   } 
 
   /**
    *   Set passenger id.
@@ -200,10 +201,12 @@ public class GeneralReposProxy extends Thread implements PassengerCloning, Hoste
               outMessage = null;                                     // service reply
 
      /* service providing */
-
+      
+      
       inMessage = (Message) sconi.readObject ();                     // get service request
       try
-      { outMessage = reposInter.processAndReply (inMessage);         // process it
+      { 
+          outMessage = reposInter.processAndReply (inMessage);         // process it
       }
       catch (MessageException e)
       { GenericIO.writelnString ("Thread " + getName () + ": " + e.getMessage () + "!");

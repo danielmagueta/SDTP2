@@ -113,7 +113,9 @@ public class Message implements Serializable
          }
       else if ((msgType == MessageType.PLANEREADY) || (msgType == MessageType.PLANEREADYDONE) || (msgType == MessageType.WAITALL)
               || (msgType == MessageType.WAITALLDONE) || (msgType == MessageType.PARK) || (msgType == MessageType.PARKDONE) 
-              || (msgType == MessageType.PILOTSTATE))
+              || (msgType == MessageType.PILOTSTATE) || (msgType == MessageType.FLYDEST) || (msgType == MessageType.FLYDESTDONE) 
+              || (msgType == MessageType.FLYBACK) || (msgType == MessageType.FLYBACKDONE) || (msgType == MessageType.ARRIVAL) 
+              || (msgType == MessageType.ARRIVALDONE))
          { pilotState = int_val;
          }
       else  

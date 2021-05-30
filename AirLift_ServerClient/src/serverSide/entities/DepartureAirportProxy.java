@@ -61,7 +61,7 @@ public class DepartureAirportProxy extends Thread implements PassengerCloning, H
    *  Instantiation of a client proxy.
    *
    *     @param sconi communication channel
-   *     @param aAirportInter interface to the departure airport
+   *     @param dAirportInter interface to the departure airport
    */
 
    public DepartureAirportProxy (ServerCom sconi, DepartureAirportInterface dAirportInter)

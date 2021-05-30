@@ -1,5 +1,4 @@
 package serverSide.sharedRegions;
-
 import serverSide.main.*;
 import serverSide.entities.*;
 import clientSide.entities.*;
@@ -111,7 +110,7 @@ public class ArrivalAirport {
         repos.subtractInF();
         repos.addPTAL();
         ((ArrivalAirportProxy) Thread.currentThread()).setPassengerState(3);
-        repos.setPassengerState(((DepartureAirportProxy) Thread.currentThread()).getPassengerId(),3);
+        repos.setPassengerState(((ArrivalAirportProxy) Thread.currentThread()).getPassengerId(),3);
         nPassengerArrived ++;
         nOut ++;
         access.up();
